@@ -1,13 +1,25 @@
 import React, { Component } from 'react';
-import SinglePost from './SinglePost';
+import Pokeball from '../pokeball.png';
 import {connect} from 'react-redux'
+import { Link } from 'react-router-dom';
 
 export class Home extends Component {
 	render() {
 		const { posts } = this.props;
 		const postList = posts.length ? (
 			posts.map((post) => {
-				return <SinglePost post={post} />;
+				return (
+			<div className='post card' key={post.id}>
+			<img alt='#' src={Pokeball} />
+			<div className='card-content'>
+				<Link to={`/${post.id}`}>
+					<span className='card-title red-text'>{post.title}</span>
+				</Link>
+				<p>{post.body}</p>
+
+			</div>
+		</div>
+				)
 			})
 		) : (
 			<div className='center'>Loading</div>
@@ -16,18 +28,17 @@ export class Home extends Component {
 		return (
 			<div className='container home '>
 				<h4 className='center'>home</h4>
-
 				{postList}
 			</div>
 		);
 	}
 }
 
-const mapStateToProps = state =>{
+const mapStateToProps =(state) =>{
 	return {
 		posts: state.posts
-
 	}
 }
+
 
 export default connect(mapStateToProps)(Home);
